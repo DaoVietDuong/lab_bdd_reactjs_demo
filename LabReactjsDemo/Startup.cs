@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Reflection;
 
 namespace LabReactjsDemo
 {
@@ -28,6 +30,7 @@ namespace LabReactjsDemo
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +66,7 @@ namespace LabReactjsDemo
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
 
             var db = InMemoryDatabase.LabDbContext.Items;
             db.Add(new Item()

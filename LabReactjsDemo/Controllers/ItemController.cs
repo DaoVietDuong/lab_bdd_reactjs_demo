@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LabReactjsDemo.Command;
+using LabReactjsDemo.Query;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,30 +15,32 @@ namespace LabReactjsDemo.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        public ItemController()
+        private IMediator _mediator;
+        public ItemController(IMediator mediator)
         {
-
+            _mediator = mediator;
         }
         // GET: api/<ItemController>
         [HttpGet]
-        public IEnumerable<Item> Get()
+        public async Task<IEnumerable<Item>> Get()
         {
-            return InMemoryDatabase.LabDbContext.Items;
+            return await _mediator.Send(new ItemQuery());
         }
 
         // GET api/<ItemController>/5
         [HttpGet("{id}")]
-        public Item Get(Guid id)
+        public Item GetById(Guid id)
         {
             return InMemoryDatabase.LabDbContext.Items.SingleOrDefault(x => id == x.Id);
         }
 
         // POST api/<ItemController>
         [HttpPost]
-        public void Post([FromBody] Item item)
+        public async Task<IActionResult> Post([FromBody] CreateItemCommand item)
         {
-            item.Id = Guid.NewGuid();
-            InMemoryDatabase.LabDbContext.Items.Add(item);
+            var id = await _mediator.Send(item);
+
+            return CreatedAtAction(nameof(GetById), new { id = id }, new { id });
         }
 
         // PUT api/<ItemController>/5
