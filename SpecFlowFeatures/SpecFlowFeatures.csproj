@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="SpecFlow" Version="3.5.5" />
+    <PackageReference Include="SpecFlow.NUnit" Version="3.5.5" />
+    <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.5.5" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.4.243" />
-
-    
-    <PackageReference Include="SpecRun.SpecFlow" Version="3.5.8" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.5.5" />
     
 
     
@@ -24,8 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Drivers\" />
     <Folder Include="Hooks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LabReactjsDemo\LabReactjsDemo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Drivers\geckodriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

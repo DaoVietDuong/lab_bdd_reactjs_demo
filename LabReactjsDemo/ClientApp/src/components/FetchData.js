@@ -50,7 +50,7 @@ export class FetchData extends Component {
 
     return (
       <div>
-        <h1 id="tabelLabel" >Weather forecast</h1>
+        <h1 id="tabelLabel" >iPhone series</h1>
         <p>This component demonstrates fetching data from the server.</p>
             <CreateForm onCreated={this.refresh.bind(this)}/>
 

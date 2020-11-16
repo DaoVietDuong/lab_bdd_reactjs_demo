@@ -9,6 +9,7 @@ namespace LabReactjsDemo.Command
 {
     public class CreateItemCommand : IRequest<Guid>
     {
+        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
@@ -20,7 +21,7 @@ namespace LabReactjsDemo.Command
         {
             var newItem = new Item()
             {
-                Id = Guid.NewGuid(),
+                Id = request.Id.HasValue ? request.Id.Value : Guid.NewGuid(),
                 Description = request.Description,
                 Name = request.Name,
                 Quantity = request.Quantity

@@ -29,9 +29,9 @@ namespace LabReactjsDemo.Controllers
 
         // GET api/<ItemController>/5
         [HttpGet("{id}")]
-        public Item GetById(Guid id)
+        public IActionResult GetById(Guid id)
         {
-            return InMemoryDatabase.LabDbContext.Items.SingleOrDefault(x => id == x.Id);
+            return Ok();
         }
 
         // POST api/<ItemController>
@@ -41,34 +41,6 @@ namespace LabReactjsDemo.Controllers
             var id = await _mediator.Send(item);
 
             return CreatedAtAction(nameof(GetById), new { id = id }, new { id });
-        }
-
-        // PUT api/<ItemController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] Item item)
-        {
-            if (id != item.Id) return BadRequest();
-
-            var instance = InMemoryDatabase.LabDbContext.Items.FirstOrDefault(x => item.Id == x.Id);
-
-            if (instance == null) return BadRequest();
-
-            InMemoryDatabase.LabDbContext.Items.Remove(instance);
-            InMemoryDatabase.LabDbContext.Items.Add(item);
-            return Ok();
-        }
-
-        // DELETE api/<ItemController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
-        {
-            var instance = InMemoryDatabase.LabDbContext.Items.FirstOrDefault(x => x.Id == id);
-
-            if (instance == null) return BadRequest();
-
-            InMemoryDatabase.LabDbContext.Items.Remove(instance);
-
-            return Ok();
         }
     }
 }
